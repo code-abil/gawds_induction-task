@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            function check(){
+                 var token =1;
+                 var checkfname=document.getElementById("fname").value;
+                 var checklname=document.getElementById("lname").value;
+                 var checkage=document.getElementById("age").value;
+                 var checkmobile=document.getElementById("mobile").value;
+                 var checkemail=document.getElementById("email").value;
+                // alert(checkfname+" "+checklname+" "+checkage+" "+checkmobile+" "+checkemail);
+                 var empty=0,agetok=0,mobiletok=0,emailtok;
+                 
+                 if(checkfname=="" || checklname=="" || checkage=="" || checkmobile=="" || checkemail=="")  
+                    empty=1;
+                 
+                 if(isNaN(checkage)) agetok=1;
+                 if(isNaN(checkmobile))mobiletok=1;
+                 if(checkemail.endsWith('@gmail.com')) emailtok=0;
+                 else emailtok=1;
+                 
+                 if(empty+agetok+emailtok+mobiletok==0) func();
+                 else{
+                    var string="";
+                    if(empty)     string+="Enter all fields.\n";
+                    if(agetok)    string+="Age is a number field.\n";
+                    if(mobiletok) string+="Moblie is a number field.\n";
+                    if(emailtok)  string+="Enter a vaild Email_Id.\n";
+                    alert(string);
+                 }
+            }
+            
+            function func(){
+                var firstname=$('#fname').val();
+                var secondname=$('#lname').val();
+                var ageval=$('#age').val();
+                var mobileno=$('#mobile').val();
+                var Emailid=$('#email').val();
+                //alert(firstname+" "+secondname+" "+ageval+" "+mobileno+" "+Emailid);
+                $.ajax({
+                    url:"https://docs.google.com/forms/d/e/1FAIpQLSfey1j2OmisbwNPf8hdQPzDc2ILW5In7CmOyGxST3gG5DQFqA/formResponse",
+                    data:{"entry.1364215951":firstname,"entry.443390691":secondname,"entry.969460188":ageval,
+                    "entry_1065509199":mobileno,"entry_889664069":Emailid},
+                    type:"POST",
+                    dataType:"xml"
+                });
+                alert("Successfully submitted!!");
+                location.reload()
+                //window.open("main.html");     
+            }
+        </script>
+    </head>
+    <body>
+        <div class="formbox">
+            <img src="gawds-logo.jpg" class="gawdslogo"/>  
+            <form id="form  ">
+                <p>First Name</p>
+                <input type="text" placeholder="Enter your First Name" id="fname" />
+                <p>Last Name</p>
+                <input type="text" placeholder="Enter your Last Name" id="lname"/>
+                <p>Age</p>
+                <input type="text" placeholder="Enter your Age"  id="age"/>
+                <p>Phone</p>
+                <input type="text" placeholder="Enter your Mobile Number" id="mobile"/ >
+                <p>Email</p>
+                <input type="text" placeholder="Enter your Email-Id" id="email"/>
+                <input type="button" value="SUBMIT" class="submit1" onclick="check()"/> 
+            </form>
+        </div>
+    </body>
+</html>
